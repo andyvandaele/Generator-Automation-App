@@ -1,4 +1,5 @@
 [app]
+source.dir = .
 # (Mandatory) Name of the application
 title = GeneratorAutomationApp
 # (Mandatory) Package
