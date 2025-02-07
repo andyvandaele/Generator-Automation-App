@@ -1,44 +1,61 @@
 [app]
-# Locatie van de bronbestanden
-source.dir = .
-
-# Naam van de app zoals weergegeven op Android
+# (str) Title of your application
 title = GeneratorAutomationApp
 
-# Unieke pakketnaam (gebruik een eigen domein als je dit later in de Play Store wilt zetten)
+# (str) Package name
 package.name = generatorautomationapp
+
+# (str) Package domain (needed for android/ios packaging)
 package.domain = org.myapp
 
-# Versienummer van de app
-version = 1.0.0
+# (str) Source code where the main.py live
+source.dir = .
 
-# Python-versie (gebruik 3.9 voor compatibiliteit)
-python.version = 3.9
-
-# Welke bestanden moeten worden meegenomen in de build?
+# (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas
 
-# Vereisten: welke Python-pakketten moeten worden geïnstalleerd?
+# (list) Application requirements
 requirements = python3,kivy,requests
 
-# Android-permissies (pas aan als je extra toegang nodig hebt, zoals Bluetooth of GPS)
-android.permissions = INTERNET,ACCESS_NETWORK_STATE,BLUETOOTH,BLUETOOTH_ADMIN
+# (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
+orientation = portrait
 
-# Android-architectuur instellen voor compatibiliteit
-android.archs = arm64-v8a
-
-# Forceer het gebruik van de nieuwste NDK
-android.ndk = 23b
-
-# (Optioneel) Pad naar Android SDK en NDK (indien Buildozer deze niet automatisch vindt)
-# android.sdk_path = $HOME/.android/sdk
-# android.ndk_path = $HOME/.android/ndk
-
-# (Optioneel) Geef aan of je een fullscreen-app wilt
+# (bool) Enable fullscreen mode (default: 1)
 fullscreen = 1
 
-# (Optioneel) Minimale Android-versie waarop de app draait
+# (str) Android entry point, default is ok for Kivy-based app
+android.entrypoint = org.kivy.android.PythonActivity
+
+# (str) Android app theme, default is ok for Kivy-based app
+android.apptheme = "@android:style/Theme.NoTitleBar"
+
+# (str) Presplash of the application
+presplash.filename = %(source.dir)s/data/presplash.png
+
+# (str) Icon of the application
+icon.filename = %(source.dir)s/data/icon.png
+
+# (str) Supported Android API version (minimum: 21)
 android.minapi = 21
 
-# (Optioneel) Logniveau (zet op 2 voor minder meldingen, 1 voor meer details)
-log_level = 2
+# (str) Android SDK version to use (default: latest installed)
+android.sdk = latest
+
+# (str) Android NDK version to use (default: latest installed)
+android.ndk = 23b
+
+# (str) Android NDK API to use (default: android.minapi)
+android.ndk_api = 21
+
+# (str) Bootstraps to use for android builds (default: sdl2)
+android.bootstrap = sdl2
+
+# (list) Permissions
+android.permissions = INTERNET,ACCESS_NETWORK_STATE
+
+# (list) Features you wish to use (android only)
+android.features = onPause,onResume
+
+# (str) The format used to package the app for android
+# (one of: apk, aab)
+android.package_type = apk
