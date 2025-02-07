@@ -1,38 +1,13 @@
+name: APK Build Workflow
+
 on:
   workflow_dispatch:
-
-name: Build Kivy APK
-
-on: [push, pull_request]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-
-      - name: Install Buildozer
-        run: |
-          sudo apt update
-          sudo apt install -y python3-pip openjdk-11-jdk
-          pip install buildozer cython
-
-      - name: Install Android SDK Build-Tools
-  run: |
-    yes | sdkmanager --install "build-tools;31.0.0" "platform-tools" "platforms;android-31"
-    yes | sdkmanager --licenses
-
-          buildozer android debug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: kivy-apk
-          path: bin/*.apk
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Print a message
+        run: echo "✅ GitHub Actions werkt nu!"
