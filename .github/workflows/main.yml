@@ -1,13 +1,33 @@
-name: APK Build Workflow
+import time
 
-on:
-  workflow_dispatch:
+# 🔹 Functie om de status van de workflow te controleren
+def check_workflow_status():
+    url = f"https://api.github.com/repos/{OWNER}/{REPO}/actions/runs"
+    response = requests.get(url, headers=HEADERS)
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Print a message
-        run: echo "✅ GitHub Actions werkt nu!"
+    if response.status_code == 200:
+        runs = response.json()["workflow_runs"]
+        if runs:
+            last_run = runs[0]
+            print(f"🕒 Laatste build status: {last_run['status']} - {last_run['conclusion']}")
+            return last_run['status'], last_run['conclusion']
+        else:
+            print("⚠️ Geen recente builds gevonden.")
+            return None, None
+    else:
+        print(f"⚠️ Fout bij ophalen van workflow status: {response.status_code}")
+        return None, None
+
+# 🚀 Start de workflow en controleer de status
+trigger_workflow()
+time.sleep(5)  # Wacht even voordat we de status checken
+
+for _ in range(10):  # Maximaal 10 keer controleren
+    status, conclusion = check_workflow_status()
+    if conclusion == "success":
+        print("✅ Build is geslaagd!")
+        break
+    elif conclusion == "failure":
+        print("❌ Build is mislukt!")
+        break
+    time.sleep(30)  # Wacht 30 seconden en controleer opnieuw
