@@ -1,7 +1,7 @@
 name: APK Build Workflow
 
 on:
-  workflow_dispatch:  # ✅ Zorgt ervoor dat je de workflow handmatig kunt starten
+  workflow_dispatch:
 
 jobs:
   build:
