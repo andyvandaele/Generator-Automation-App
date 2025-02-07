@@ -22,8 +22,11 @@ jobs:
           sudo apt install -y python3-pip openjdk-11-jdk
           pip install buildozer cython
 
-      - name: Build APK
-        run: |
+      - name: Install Android SDK Build-Tools
+  run: |
+    yes | sdkmanager --install "build-tools;31.0.0" "platform-tools" "platforms;android-31"
+    yes | sdkmanager --licenses
+
           buildozer android debug
 
       - name: Upload APK
