@@ -1,33 +1,34 @@
-import time
 
-# 🔹 Functie om de status van de workflow te controleren
-def check_workflow_status():
-    url = f"https://api.github.com/repos/{OWNER}/{REPO}/actions/runs"
-    response = requests.get(url, headers=HEADERS)
+name: APK Build Workflow
 
-    if response.status_code == 200:
-        runs = response.json()["workflow_runs"]
-        if runs:
-            last_run = runs[0]
-            print(f"🕒 Laatste build status: {last_run['status']} - {last_run['conclusion']}")
-            return last_run['status'], last_run['conclusion']
-        else:
-            print("⚠️ Geen recente builds gevonden.")
-            return None, None
-    else:
-        print(f"⚠️ Fout bij ophalen van workflow status: {response.status_code}")
-        return None, None
+on:
+  workflow_dispatch:  # ✅ Zorgt ervoor dat je de workflow handmatig kunt starten
 
-# 🚀 Start de workflow en controleer de status
-trigger_workflow()
-time.sleep(5)  # Wacht even voordat we de status checken
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-for _ in range(10):  # Maximaal 10 keer controleren
-    status, conclusion = check_workflow_status()
-    if conclusion == "success":
-        print("✅ Build is geslaagd!")
-        break
-    elif conclusion == "failure":
-        print("❌ Build is mislukt!")
-        break
-    time.sleep(30)  # Wacht 30 seconden en controleer opnieuw
+    steps:
+      - name: Haal de code op
+        uses: actions/checkout@v2
+
+      - name: Installeer Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+
+      - name: Installeer Buildozer en afhankelijkheden
+        run: |
+          sudo apt update && sudo apt install -y zip unzip openjdk-17-jdk python3-pip
+          pip install --upgrade buildozer cython virtualenv
+
+      - name: Bouw de APK
+        run: |
+          buildozer android debug
+
+      - name: Upload APK als artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Android-APK
+          path: bin/*.apk
+
