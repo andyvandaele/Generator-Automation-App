@@ -25,7 +25,7 @@ requirements = python3,kivy,requests
 android.permissions = INTERNET,ACCESS_NETWORK_STATE,BLUETOOTH,BLUETOOTH_ADMIN
 
 # Android-architectuur instellen voor compatibiliteit
-android.arch = arm64-v8a
+android.archs = arm64-v8a
 
 # Forceer het gebruik van de nieuwste NDK
 android.ndk = 23b
