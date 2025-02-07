@@ -1,4 +1,3 @@
-
 name: APK Build Workflow
 
 on:
@@ -15,7 +14,7 @@ jobs:
       - name: Installeer Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.10"
+          python-version: "3.9"
 
       - name: Installeer Buildozer en afhankelijkheden
         run: |
@@ -31,4 +30,3 @@ jobs:
         with:
           name: Android-APK
           path: bin/*.apk
-
