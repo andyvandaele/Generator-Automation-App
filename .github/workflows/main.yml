@@ -1,6 +1,4 @@
 name: APK Build Workflow
-- name: Verwijder Buildozer cache
-  run: rm -rf ~/.buildozer
 
 on:
   workflow_dispatch:
@@ -18,17 +16,20 @@ jobs:
         with:
           python-version: "3.9"
 
+      - name: Verwijder Buildozer cache
+        run: rm -rf ~/.buildozer
+
       - name: Installeer Buildozer en afhankelijkheden
         run: |
-          sudo apt update && sudo apt install -y zip unzip openjdk-17-jdk python3-pip aidl
-          pip install --upgrade buildozer cython virtualenv
+          python -m pip install --upgrade pip
+          pip install buildozer
+          pip install Cython
 
       - name: Bouw de APK
-        run: |
-          buildozer -v android debug
+        run: buildozer -v android debug
 
-      - name: Upload APK als artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
-          name: Android-APK
+          name: app-debug.apk
           path: bin/*.apk
