@@ -34,3 +34,4 @@ jobs:
           name: Android-APK
           path: bin/*.apk
           path: bin/*.apk
+          path: bin/*.apk
