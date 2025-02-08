@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 name: APK Build Workflow
 
 on:
@@ -30,3 +31,38 @@ jobs:
         with:
           name: Android-APK
           path: bin/*.apk
+=======
+name: APK Build Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Haal de code op
+        uses: actions/checkout@v2
+
+      - name: Installeer Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+
+      - name: Installeer Buildozer en afhankelijkheden
+        run: |
+          sudo apt update && sudo apt install -y zip unzip openjdk-17-jdk python3-pip
+          sudo apt install -y aidl
+          pip install --upgrade buildozer cython virtualenv
+
+      - name: Bouw de APK
+        run: |
+          buildozer -v android debug
+
+      - name: Upload APK als artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Android-APK
+          path: bin/*.apk
+>>>>>>> 1842ffb585c821c2741ad902f2bb0a28f1ad233b
