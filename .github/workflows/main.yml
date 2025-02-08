@@ -30,3 +30,6 @@ jobs:
         with:
           name: Android-APK
           path: bin/*.apk
+- name: Bouw de APK
+  run: |
+    buildozer -v android debug
