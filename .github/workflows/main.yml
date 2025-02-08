@@ -1,4 +1,6 @@
 name: APK Build Workflow
+- name: Verwijder Buildozer cache
+  run: rm -rf ~/.buildozer
 
 on:
   workflow_dispatch:
