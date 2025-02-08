@@ -59,3 +59,6 @@ android.features = onPause,onResume
 # (str) The format used to package the app for android
 # (one of: apk, aab)
 android.package_type = apk
+- name: Bouw de APK
+  run: |
+    buildozer -v android debug
