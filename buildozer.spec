@@ -53,12 +53,12 @@ android.bootstrap = sdl2
 # (list) Permissions
 android.permissions = INTERNET,ACCESS_NETWORK_STATE
 
+# (list) The list of supported architectures
+android.archs = armeabi-v7a, arm64-v8a
+
 # (list) Features you wish to use (android only)
 android.features = onPause,onResume
 
 # (str) The format used to package the app for android
 # (one of: apk, aab)
 android.package_type = apk
-- name: Bouw de APK
-  run: |
-    buildozer -v android debug
