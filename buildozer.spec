@@ -55,7 +55,7 @@ android.bootstrap = sdl2
 android.permissions = INTERNET,ACCESS_NETWORK_STATE
 
 # (list) The list of supported architectures
-android.archs = armeabi-v7a, arm64-v8a
+android.archs = arm64-v8a, armeabi-v7a
 
 # (list) Features you wish to use (android only)
 android.features = onPause,onResume
